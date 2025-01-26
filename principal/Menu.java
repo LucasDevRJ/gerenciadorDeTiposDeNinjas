@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class Menu {
     int opcao;
+    int indiceNinjaBasico = 0;
+    int quantidadeNinjasBasicos = 10;
+    NinjaBasico[] ninjasBasicos = new NinjaBasico[quantidadeNinjasBasicos];
     Scanner entrada = new Scanner(System.in);
     public void exibiMenuPrincipal() {
         do {
@@ -38,6 +41,15 @@ public class Menu {
             switch (opcao) {
                 case 1:
                     criarNinjaBasico();
+                    break;
+
+                case 2:
+                    int escolhido = exibirNinjasBasicos();
+                    ninjasBasicos[escolhido].mostrarInformacoes();
+                    break;
+
+                case 3:
+
                     break;
             }
         } while (opcao != 4);
@@ -88,5 +100,16 @@ public class Menu {
         }
 
         NinjaBasico ninjaBasico = new NinjaBasico(nome, idade, tipoHabilidade);
+        ninjasBasicos[indiceNinjaBasico] = ninjaBasico;
+        indiceNinjaBasico++;
+    }
+
+    public int exibirNinjasBasicos() {
+        for (int i = 0; i < indiceNinjaBasico; i++) {
+            System.out.println(i + " - " + ninjasBasicos[i].nome);
+        }
+        System.out.print("Digite o ninja desejado: ");
+        int escolha = entrada.nextInt();
+        return escolha;
     }
 }
