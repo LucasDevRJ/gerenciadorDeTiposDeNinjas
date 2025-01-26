@@ -14,26 +14,32 @@ public class Menu {
     public void exibiMenuPrincipal() {
         do {
             System.out.println("----------|MENU PRINCIPAL|----------");
-            System.out.println("1 - Criar um ninja básico.");
-            System.out.println("2 - Criar um ninja avançado.");
-            System.out.println("3 - Sair.");
+            System.out.println("1 - Criar um ninja.");
+            System.out.println("2 - Sair.");
             System.out.println("-------------------------------------");
             System.out.print("Digite a opção desejada: ");
             opcao = entrada.nextInt();
 
             switch (opcao) {
                 case 1:
-                    exibirMenuNinjaBasico();
+                    exibirMenuNinja();
                     break;
+
+                case 2:
+                    finalizarPrograma();
+                    break;
+
+                default:
+                    System.out.println("Opção inválida!");
             }
 
-        } while (opcao != 3);
+        } while (opcao != 2);
     }
 
-    public void exibirMenuNinjaBasico() {
+    public void exibirMenuNinja() {
         do {
-            System.out.println("----------|MENU NINJA BÁSICO|----------");
-            System.out.println("1 - Criar um ninja básico.");
+            System.out.println("----------|MENU NINJA|----------");
+            System.out.println("1 - Criar um ninja básico ou avançado.");
             System.out.println("2 - Mostrar informações do ninja básico ou avançado.");
             System.out.println("3 - Executar habilidade do ninja básico ou avançado.");
             System.out.println("4 - Voltar.");
@@ -56,15 +62,24 @@ public class Menu {
                     }
                     break;
 
-//                case 3:
-//                    escolhido = exibirNinjasBasicos();
-//                    ninjasBasicos[escolhido].executarHabilidade();
-//                    break;
+                case 3:
+                    tipoNinjaEscolhido = exibirTiposDeNinjas();
+                    escolhido = exibirNinjas(tipoNinjaEscolhido);
+                    if (tipoNinjaEscolhido == 1) {
+                        ninjasBasicos[escolhido].executarHabilidade();
+                    } else {
+                        ninjasAvancados[escolhido].executarHabilidade();
+                    }
+                    break;
 
                 default:
                     System.out.println("Opção inválida!");
             }
         } while (opcao != 4);
+    }
+
+    public void finalizarPrograma() {
+        System.out.println("Programa finalizado.");
     }
 
     public void criarNinjaBasico() {
@@ -138,6 +153,13 @@ public class Menu {
         if (tipoDesejado == 2) {
             System.out.print("Digite a especialidade: ");
             String especialidade = entrada.nextLine();
+
+            while (especialidade.isEmpty()) {
+                System.out.println("Digite a especialidade!");
+                System.out.print("Digite a especialidade: ");
+                especialidade = entrada.nextLine();
+            }
+
             NinjaAvancado ninjaAvancado = new NinjaAvancado(nome, idade, tipoHabilidade, especialidade);
 
             ninjasAvancados[indiceNinjaAvancado] = ninjaAvancado;
