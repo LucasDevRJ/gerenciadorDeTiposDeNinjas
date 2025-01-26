@@ -11,11 +11,11 @@ public class NinjaBasico implements Ninja {
     }
     @Override
     public void mostrarInformacoes() {
-
+        System.out.println("Olá, meu nome é " + this.nome + " e tenho " + this.idade + " anos de idade.");
     }
 
     @Override
     public void executarHabilidade() {
-
+        System.out.println("Executando a minha habilidade " + this.habilidade + "!!!");
     }
 }
