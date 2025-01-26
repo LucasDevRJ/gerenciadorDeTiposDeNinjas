@@ -49,8 +49,12 @@ public class Menu {
                     break;
 
                 case 3:
-
+                    escolhido = exibirNinjasBasicos();
+                    ninjasBasicos[escolhido].executarHabilidade();
                     break;
+
+                default:
+                    System.out.println("Opção inválida!");
             }
         } while (opcao != 4);
     }
