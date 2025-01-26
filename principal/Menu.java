@@ -34,8 +34,8 @@ public class Menu {
         do {
             System.out.println("----------|MENU NINJA BÁSICO|----------");
             System.out.println("1 - Criar um ninja básico.");
-            System.out.println("2 - Mostrar informações do ninja básico.");
-            System.out.println("3 - Executar habilidade do ninja básico.");
+            System.out.println("2 - Mostrar informações do ninja básico ou avançado.");
+            System.out.println("3 - Executar habilidade do ninja básico ou avançado.");
             System.out.println("4 - Voltar.");
             System.out.println("-------------------------------------");
             System.out.print("Digite a opção desejada: ");
@@ -47,14 +47,19 @@ public class Menu {
                     break;
 
                 case 2:
-                    int escolhido = exibirNinjasBasicos();
-                    ninjasBasicos[escolhido].mostrarInformacoes();
+                    int tipoNinjaEscolhido = exibirTiposDeNinjas();
+                    int escolhido = exibirNinjas(tipoNinjaEscolhido);
+                    if (tipoNinjaEscolhido == 1) {
+                        ninjasBasicos[escolhido].mostrarInformacoes();
+                    } else {
+                        ninjasAvancados[escolhido].mostrarInformacoes();
+                    }
                     break;
 
-                case 3:
-                    escolhido = exibirNinjasBasicos();
-                    ninjasBasicos[escolhido].executarHabilidade();
-                    break;
+//                case 3:
+//                    escolhido = exibirNinjasBasicos();
+//                    ninjasBasicos[escolhido].executarHabilidade();
+//                    break;
 
                 default:
                     System.out.println("Opção inválida!");
@@ -69,6 +74,8 @@ public class Menu {
         System.out.println("2 - Ninja Avançado.");
         System.out.print("Digite o tipo de ninja desejado: ");
         int tipoDesejado = entrada.nextInt();
+
+        entrada.nextLine();
 
         System.out.print("Digite o nome do ninja: ");
         String nome = entrada.nextLine();
@@ -126,6 +133,8 @@ public class Menu {
             }
         } while (tipo != 1 && tipo != 2 && tipo != 3 && tipo != 4 && tipo != 5);
 
+        entrada.nextLine();
+
         if (tipoDesejado == 2) {
             System.out.print("Digite a especialidade: ");
             String especialidade = entrada.nextLine();
@@ -145,14 +154,34 @@ public class Menu {
         }
     }
 
-    public int exibirNinjasBasicos() {
-        System.out.println("----------|NINJAS BÁSICOS|----------");
-        for (int i = 0; i < indiceNinjaBasico; i++) {
-            System.out.println(i + " - " + ninjasBasicos[i].nome);
+    public int exibirTiposDeNinjas() {
+        System.out.println("1 - Ninja Básico.");
+        System.out.println("2 - Ninja Avançado.");
+        System.out.print("Digite o tipo de ninja: ");
+        int tipoNinja = entrada.nextInt();
+        return tipoNinja;
+    }
+
+    public int exibirNinjas(int tipoDeNinjaEscolhido) {
+        int escolha;
+        if (tipoDeNinjaEscolhido == 1) {
+            System.out.println("----------|NINJAS BÁSICOS|----------");
+            for (int i = 0; i < indiceNinjaBasico; i++) {
+                System.out.println(i + " - " + ninjasBasicos[i].nome);
+            }
+            System.out.println("------------------------------------");
+            System.out.print("Digite o ninja desejado: ");
+            escolha = entrada.nextInt();
+
+        } else {
+            System.out.println("----------|NINJAS AVANÇADOS|----------");
+            for (int i = 0; i < indiceNinjaAvancado; i++) {
+                System.out.println(i + " - " + ninjasAvancados[i].nome);
+            }
+            System.out.println("------------------------------------");
+            System.out.print("Digite o ninja desejado: ");
+            escolha = entrada.nextInt();
         }
-        System.out.println("------------------------------------");
-        System.out.print("Digite o ninja desejado: ");
-        int escolha = entrada.nextInt();
         return escolha;
     }
 }
