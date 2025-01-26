@@ -3,13 +3,13 @@ package principal;
 public class NinjaAvancado implements Ninja {
     String nome;
     int idade;
-    String habilidade;
+    TipoHabilidade tipoHabilidade;
     String especialidade;
 
-    public NinjaAvancado(String nome, int idade, String habilidade, String especialidade) {
+    public NinjaAvancado(String nome, int idade, TipoHabilidade tipoHabilidade, String especialidade) {
         this.nome = nome;
         this.idade = idade;
-        this.habilidade = habilidade;
+        this.tipoHabilidade = tipoHabilidade;
         this.especialidade = especialidade;
     }
     @Override
@@ -19,6 +19,6 @@ public class NinjaAvancado implements Ninja {
 
     @Override
     public void executarHabilidade() {
-        System.out.println("Executando a minha habilidade " + this.habilidade + " aprimorada pela minha especialidade de " + this.especialidade);
+        System.out.println("Executando a minha habilidade " + this.tipoHabilidade + " aprimorada pela minha especialidade de " + this.especialidade);
     }
 }
