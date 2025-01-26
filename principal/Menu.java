@@ -7,6 +7,9 @@ public class Menu {
     int indiceNinjaBasico = 0;
     int quantidadeNinjasBasicos = 10;
     NinjaBasico[] ninjasBasicos = new NinjaBasico[quantidadeNinjasBasicos];
+    int indiceNinjaAvancado = 0;
+    int quantidadeNinjasAvancados = 5;
+    NinjaAvancado[] ninjasAvancados = new NinjaAvancado[quantidadeNinjasAvancados];
     Scanner entrada = new Scanner(System.in);
     public void exibiMenuPrincipal() {
         do {
@@ -62,6 +65,11 @@ public class Menu {
     public void criarNinjaBasico() {
         entrada.nextLine();
 
+        System.out.println("1 - Ninja Básico.");
+        System.out.println("2 - Ninja Avançado.");
+        System.out.print("Digite o tipo de ninja desejado: ");
+        int tipoDesejado = entrada.nextInt();
+
         System.out.print("Digite o nome do ninja: ");
         String nome = entrada.nextLine();
 
@@ -79,8 +87,6 @@ public class Menu {
             System.out.print("Digite a idade do ninja: ");
             idade = entrada.nextInt();
         }
-
-
 
         TipoHabilidade tipoHabilidade = null;
         int tipo;
@@ -120,10 +126,23 @@ public class Menu {
             }
         } while (tipo != 1 && tipo != 2 && tipo != 3 && tipo != 4 && tipo != 5);
 
-        NinjaBasico ninjaBasico = new NinjaBasico(nome, idade, tipoHabilidade);
-        ninjasBasicos[indiceNinjaBasico] = ninjaBasico;
-        indiceNinjaBasico++;
-        System.out.println("O ninja básico " + ninjaBasico.nome + " foi criado com sucesso.");
+        if (tipoDesejado == 2) {
+            System.out.print("Digite a especialidade: ");
+            String especialidade = entrada.nextLine();
+            NinjaAvancado ninjaAvancado = new NinjaAvancado(nome, idade, tipoHabilidade, especialidade);
+
+            ninjasAvancados[indiceNinjaAvancado] = ninjaAvancado;
+            indiceNinjaAvancado++;
+
+            System.out.println("O ninja avançado " + ninjaAvancado.nome + " foi criado com sucesso.");
+        } else {
+            NinjaBasico ninjaBasico = new NinjaBasico(nome, idade, tipoHabilidade);
+
+            ninjasBasicos[indiceNinjaBasico] = ninjaBasico;
+            indiceNinjaBasico++;
+
+            System.out.println("O ninja básico " + ninjaBasico.nome + " foi criado com sucesso.");
+        }
     }
 
     public int exibirNinjasBasicos() {
