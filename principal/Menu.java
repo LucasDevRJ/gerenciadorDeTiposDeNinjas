@@ -29,7 +29,7 @@ public class Menu {
 
     public void exibirMenuNinjaBasico() {
         do {
-            System.out.println("----------|NINJA BÁSICO|----------");
+            System.out.println("----------|MENU NINJA BÁSICO|----------");
             System.out.println("1 - Criar um ninja básico.");
             System.out.println("2 - Mostrar informações do ninja básico.");
             System.out.println("3 - Executar habilidade do ninja básico.");
@@ -65,53 +65,73 @@ public class Menu {
         System.out.print("Digite o nome do ninja: ");
         String nome = entrada.nextLine();
 
+        while (nome.isEmpty()) {
+            System.out.println("Digite o nome do ninja!");
+            System.out.print("Digite o nome do ninja: ");
+            nome = entrada.nextLine();
+        }
+
         System.out.print("Digite a idade do ninja: ");
         int idade = entrada.nextInt();
 
-        System.out.println("1 - " + TipoHabilidade.TAIJUTSU);
-        System.out.println("2 - " + TipoHabilidade.NINJUTSU);
-        System.out.println("3 - " + TipoHabilidade.GENJUTSU);
-        System.out.println("4 - " + TipoHabilidade.KATON);
-        System.out.println("5 - " + TipoHabilidade.RINNEGAN);
-        System.out.print("Escolha o tipo de habilidade do ninja: ");
-        int tipo = entrada.nextInt();
+        while (idade < 0) {
+            System.out.println("Digite uma idade válida!");
+            System.out.print("Digite a idade do ninja: ");
+            idade = entrada.nextInt();
+        }
+
+
 
         TipoHabilidade tipoHabilidade = null;
-        switch (tipo) {
-            case 1:
-                tipoHabilidade = TipoHabilidade.TAIJUTSU;
-                break;
+        int tipo;
+        do {
+            System.out.println("1 - " + TipoHabilidade.TAIJUTSU);
+            System.out.println("2 - " + TipoHabilidade.NINJUTSU);
+            System.out.println("3 - " + TipoHabilidade.GENJUTSU);
+            System.out.println("4 - " + TipoHabilidade.KATON);
+            System.out.println("5 - " + TipoHabilidade.RINNEGAN);
+            System.out.print("Escolha o tipo de habilidade do ninja: ");
+            tipo = entrada.nextInt();
 
-            case 2:
-                tipoHabilidade = TipoHabilidade.NINJUTSU;
-                break;
+            switch (tipo) {
+                case 1:
+                    tipoHabilidade = TipoHabilidade.TAIJUTSU;
+                    break;
 
-            case 3:
-                tipoHabilidade = TipoHabilidade.GENJUTSU;
-                break;
+                case 2:
+                    tipoHabilidade = TipoHabilidade.NINJUTSU;
+                    break;
 
-            case 4:
-                tipoHabilidade = TipoHabilidade.KATON;
-                break;
+                case 3:
+                    tipoHabilidade = TipoHabilidade.GENJUTSU;
+                    break;
 
-            case 5:
-                tipoHabilidade = TipoHabilidade.RINNEGAN;
-                break;
+                case 4:
+                    tipoHabilidade = TipoHabilidade.KATON;
+                    break;
 
-            default:
-                System.out.println("Opção inválida!");
+                case 5:
+                    tipoHabilidade = TipoHabilidade.RINNEGAN;
+                    break;
 
-        }
+                default:
+                    System.out.println("Opção inválida!");
+
+            }
+        } while (tipo != 1 && tipo != 2 && tipo != 3 && tipo != 4 && tipo != 5);
 
         NinjaBasico ninjaBasico = new NinjaBasico(nome, idade, tipoHabilidade);
         ninjasBasicos[indiceNinjaBasico] = ninjaBasico;
         indiceNinjaBasico++;
+        System.out.println("O ninja básico " + ninjaBasico.nome + " foi criado com sucesso.");
     }
 
     public int exibirNinjasBasicos() {
+        System.out.println("----------|NINJAS BÁSICOS|----------");
         for (int i = 0; i < indiceNinjaBasico; i++) {
             System.out.println(i + " - " + ninjasBasicos[i].nome);
         }
+        System.out.println("------------------------------------");
         System.out.print("Digite o ninja desejado: ");
         int escolha = entrada.nextInt();
         return escolha;
