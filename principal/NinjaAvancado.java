@@ -14,11 +14,11 @@ public class NinjaAvancado implements Ninja {
     }
     @Override
     public void mostrarInformacoes() {
-
+        System.out.println("Olá, meu nome é " + this.nome + ", tenho " + this.idade + " anos de idade e minha especialidade é " + this.especialidade);
     }
 
     @Override
     public void executarHabilidade() {
-
+        System.out.println("Executando a minha habilidade " + this.habilidade + " aprimorada pela minha especialidade de " + this.especialidade);
     }
 }
