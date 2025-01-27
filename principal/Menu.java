@@ -3,15 +3,19 @@ package principal;
 import java.util.Scanner;
 
 public class Menu {
-    int opcao;
-    int indiceNinjaBasico = 0;
     int quantidadeNinjasBasicos = 10;
+    int indiceNinjaBasico = 0;
+    int[] indicesNinjasBasicos = new int[quantidadeNinjasBasicos];
     NinjaBasico[] ninjasBasicos = new NinjaBasico[quantidadeNinjasBasicos];
-    int indiceNinjaAvancado = 0;
     int quantidadeNinjasAvancados = 5;
+    int indiceNinjaAvancado = 0;
+    int[] indicesNinjasAvancados = new int[quantidadeNinjasAvancados];
     NinjaAvancado[] ninjasAvancados = new NinjaAvancado[quantidadeNinjasAvancados];
     Scanner entrada = new Scanner(System.in);
+    boolean programaFinalizado = false;
+
     public void exibiMenuPrincipal() {
+        int opcao;
         do {
             System.out.println("----------|MENU PRINCIPAL|----------");
             System.out.println("1 - Criar um ninja.");
@@ -33,10 +37,11 @@ public class Menu {
                     System.out.println("Opção inválida!");
             }
 
-        } while (opcao != 2);
+        } while (!programaFinalizado);
     }
 
     public void exibirMenuNinja() {
+        int opcao;
         do {
             System.out.println("----------|MENU NINJA|----------");
             System.out.println("1 - Criar um ninja básico ou avançado.");
@@ -46,30 +51,21 @@ public class Menu {
             System.out.println("-------------------------------------");
             System.out.print("Digite a opção desejada: ");
             opcao = entrada.nextInt();
-
             switch (opcao) {
                 case 1:
                     criarNinjaBasico();
                     break;
 
                 case 2:
-                    int tipoNinjaEscolhido = exibirTiposDeNinjas();
-                    int escolhido = exibirNinjas(tipoNinjaEscolhido);
-                    if (tipoNinjaEscolhido == 1) {
-                        ninjasBasicos[escolhido].mostrarInformacoes();
-                    } else {
-                        ninjasAvancados[escolhido].mostrarInformacoes();
-                    }
+                    exibiInformacoesDoNinjaOuExecutaHabilidade(true);
                     break;
 
                 case 3:
-                    tipoNinjaEscolhido = exibirTiposDeNinjas();
-                    escolhido = exibirNinjas(tipoNinjaEscolhido);
-                    if (tipoNinjaEscolhido == 1) {
-                        ninjasBasicos[escolhido].executarHabilidade();
-                    } else {
-                        ninjasAvancados[escolhido].executarHabilidade();
-                    }
+                    exibiInformacoesDoNinjaOuExecutaHabilidade(false);
+                    break;
+
+                case 4:
+                    exibiMenuPrincipal();
                     break;
 
                 default:
@@ -79,6 +75,7 @@ public class Menu {
     }
 
     public void finalizarPrograma() {
+        programaFinalizado = true;
         System.out.println("Programa finalizado.");
     }
 
@@ -89,6 +86,12 @@ public class Menu {
         System.out.println("2 - Ninja Avançado.");
         System.out.print("Digite o tipo de ninja desejado: ");
         int tipoDesejado = entrada.nextInt();
+
+        while (tipoDesejado != 1 && tipoDesejado != 2) {
+            System.out.println("Digite 1 ou 2!");
+            System.out.print("Digite o tipo de ninja desejado: ");
+            tipoDesejado = entrada.nextInt();
+        }
 
         entrada.nextLine();
 
@@ -163,6 +166,7 @@ public class Menu {
             NinjaAvancado ninjaAvancado = new NinjaAvancado(nome, idade, tipoHabilidade, especialidade);
 
             ninjasAvancados[indiceNinjaAvancado] = ninjaAvancado;
+            indicesNinjasAvancados[indiceNinjaAvancado] = indiceNinjaAvancado;
             indiceNinjaAvancado++;
 
             System.out.println("O ninja avançado " + ninjaAvancado.nome + " foi criado com sucesso.");
@@ -170,6 +174,7 @@ public class Menu {
             NinjaBasico ninjaBasico = new NinjaBasico(nome, idade, tipoHabilidade);
 
             ninjasBasicos[indiceNinjaBasico] = ninjaBasico;
+            indicesNinjasBasicos[indiceNinjaBasico] = indiceNinjaBasico;
             indiceNinjaBasico++;
 
             System.out.println("O ninja básico " + ninjaBasico.nome + " foi criado com sucesso.");
@@ -177,33 +182,81 @@ public class Menu {
     }
 
     public int exibirTiposDeNinjas() {
-        System.out.println("1 - Ninja Básico.");
-        System.out.println("2 - Ninja Avançado.");
-        System.out.print("Digite o tipo de ninja: ");
-        int tipoNinja = entrada.nextInt();
+        int tipoNinja;
+        do {
+            System.out.println("1 - Ninja Básico.");
+            System.out.println("2 - Ninja Avançado.");
+            System.out.print("Digite o tipo de ninja: ");
+            tipoNinja = entrada.nextInt();
+        } while (tipoNinja != 1 && tipoNinja != 2);
         return tipoNinja;
     }
 
     public int exibirNinjas(int tipoDeNinjaEscolhido) {
         int escolha;
+        boolean escolhaValida = false;
         if (tipoDeNinjaEscolhido == 1) {
-            System.out.println("----------|NINJAS BÁSICOS|----------");
-            for (int i = 0; i < indiceNinjaBasico; i++) {
-                System.out.println(i + " - " + ninjasBasicos[i].nome);
-            }
-            System.out.println("------------------------------------");
-            System.out.print("Digite o ninja desejado: ");
-            escolha = entrada.nextInt();
+            do {
+                System.out.println("----------|NINJAS BÁSICOS|----------");
+                for (int i = 0; i < indiceNinjaBasico; i++) {
+                    System.out.println(i + " - " + ninjasBasicos[i].nome);
+                }
+                System.out.println("------------------------------------");
+                System.out.print("Digite o ninja desejado: ");
+                escolha = entrada.nextInt();
+
+                for (int i = 0; i < indiceNinjaBasico; i++) {
+                    if (escolha == indicesNinjasBasicos[i]) {
+                        escolhaValida = true;
+                    }
+                }
+            } while (!escolhaValida);
 
         } else {
-            System.out.println("----------|NINJAS AVANÇADOS|----------");
-            for (int i = 0; i < indiceNinjaAvancado; i++) {
-                System.out.println(i + " - " + ninjasAvancados[i].nome);
-            }
-            System.out.println("------------------------------------");
-            System.out.print("Digite o ninja desejado: ");
-            escolha = entrada.nextInt();
+            do {
+                System.out.println("----------|NINJAS AVANÇADOS|----------");
+                for (int i = 0; i < indiceNinjaAvancado; i++) {
+                    System.out.println(i + " - " + ninjasAvancados[i].nome);
+                }
+                System.out.println("------------------------------------");
+                System.out.print("Digite o ninja desejado: ");
+                escolha = entrada.nextInt();
+
+//                for (int i = 0; i < indiceNinjaBasico; i++) {
+//                    if (escolha != indicesNinjasBasicos[i]) {
+//                        escolhaInvalida = true;
+//                    }
+//                }
+            } while (!escolhaValida);
+
         }
         return escolha;
+    }
+
+    public void exibiInformacoesDoNinjaOuExecutaHabilidade(boolean querVerInformacoes) {
+        int tipoNinjaEscolhido = exibirTiposDeNinjas();
+        if (tipoNinjaEscolhido == 1) {
+            if (indiceNinjaBasico > 0) {
+                int escolhido = exibirNinjas(tipoNinjaEscolhido);
+                if (querVerInformacoes) {
+                    ninjasBasicos[escolhido].mostrarInformacoes();
+                } else {
+                    ninjasBasicos[escolhido].executarHabilidade();
+                }
+            } else {
+                System.out.println("Não há ninjas básicos cadastrados.");
+            }
+        } else {
+            if (indiceNinjaAvancado > 0) {
+                int escolhido = exibirNinjas(tipoNinjaEscolhido);
+                if (querVerInformacoes) {
+                    ninjasAvancados[escolhido].mostrarInformacoes();
+                } else {
+                    ninjasAvancados[escolhido].executarHabilidade();
+                }
+            } else {
+                System.out.println("Não há ninjas avançados cadastrados.");
+            }
+        }
     }
 }
