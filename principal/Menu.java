@@ -222,11 +222,11 @@ public class Menu {
                 System.out.print("Digite o ninja desejado: ");
                 escolha = entrada.nextInt();
 
-//                for (int i = 0; i < indiceNinjaBasico; i++) {
-//                    if (escolha != indicesNinjasBasicos[i]) {
-//                        escolhaInvalida = true;
-//                    }
-//                }
+                for (int i = 0; i < indiceNinjaAvancado; i++) {
+                    if (escolha == indicesNinjasAvancados[i]) {
+                        escolhaValida = true;
+                    }
+                }
             } while (!escolhaValida);
 
         }
